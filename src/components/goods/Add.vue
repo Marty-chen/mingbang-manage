@@ -40,6 +40,7 @@
         <el-form-item required label="产品主图" prop="img">
           <upload :initType="productInitType" @sendImgUrl="getProductImg" @delImg="delProductImg" />
         </el-form-item>
+        <div class="comWordls">只支持IPG,JPEG,PNG格式;图片不大于2MB。尺寸：1248*800。</div>
         <el-form-item required label="产品特征" prop="gdsFeature">
           <el-input v-model="addForm.gdsFeature" type="textarea" rows="8" style="width:500px" />
         </el-form-item>
@@ -75,7 +76,7 @@
         <el-form-item label="第五张：">
           <upload :initType="detailInitType5" @sendImgUrl="getDetailImg5" @delImg="delDetailImg5" />
         </el-form-item>
-        <div class="comWordls">上传至少一张产品详情图片。按顺序上传,否则在主页上排列显示会不正常</div>
+        <div class="comWordls">上传至少一张产品详情图片。按顺序上传,否则在主页上排列显示会不正常。尺寸：1248*800。</div>
 
         <div class="title">产品基本参数:</div>
         <div>
@@ -384,5 +385,6 @@ export default {
 .comWordls {
   font-size: 12px;
   color: #999;
+  margin: 50px 100px;
 }
 </style>
