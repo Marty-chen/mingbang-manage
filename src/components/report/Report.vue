@@ -13,7 +13,7 @@
       </div>
       <div class="wordls">
         只支持JPG,JPEG,PNG格式;图片不大于2M;尺寸400*400;最多只能上传8张。
-        <div style="margin-top:20px;">删除或者添加图片操作完成时，需要点击保存，才能保存到服务器</div>
+        <div style="margin-top:20px;">删除或者添加图片的操作完成时，需要点击保存，才能保存到服务器。</div>
       </div>
       <div class="btnAdd">
         <el-button class="saveBtn" type="primary" @click="saveInfo">保存</el-button>
@@ -38,23 +38,18 @@ export default {
   //  上传得到图片
    getDetailImg(img) {
      this.imgs.push(img)
-     console.log(this.imgs)
    },
    //删除图片
    delDetailImg(file) {
-     console.log(file)
      let index; 
      this.imgs.forEach((item,i)=>{
-       console.log(file.url.includes(item))
        if(file.url.includes(item)) {
          index = i
        }
      })
      this.imgs.splice(index,1)
-     console.log(this.imgs)
    },
    async saveInfo() {
-     console.log(this.imgs)
      if(!this.imgs[0]) return this.$message.error("请上传图片，或者等待图片上传完成")
      const {data} = await this.$http.post("/api/usr/env/save",this.imgs)
      if(data.code !== '0000') return this.$message.error(data.msg)

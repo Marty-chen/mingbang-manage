@@ -1,7 +1,7 @@
 html,
 body,
 #app {
-    height: 100%;
+
     margin: 0;
     padding: 0;
     min-width: 1366px;
@@ -35,4 +35,11 @@ body,
 
 .ql-editor {
     min-height: 300px;
+}
+.el-cascader-panel{
+    height: 204px;
+    
+}
+.el-cascader-menu .el-scrollbar__wrap {
+    overflow: auto;
 }

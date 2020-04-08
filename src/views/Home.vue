@@ -3,7 +3,7 @@
     <el-header>
       <div>
         <img src="../assets/logo.png" alt />
-        <span>名邦官网后台管理系统</span>
+        <span>明邦官网后台管理系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>

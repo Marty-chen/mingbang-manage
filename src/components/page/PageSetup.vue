@@ -14,9 +14,7 @@
           <el-form-item required label="上传图片">
             <upload :initType="aboutInitType" @sendImgUrl="getAboutImg" @delImg="delAboutImg" />
           </el-form-item>
-          <el-form-item required label="公司全称">
-            <el-input v-model="companyInfo.name" style="width:500px" />
-          </el-form-item>
+          
           <el-form-item required label="公司介绍">
             <quill-editor v-model="companyInfo.introduction" :options="editorOption"></quill-editor>
           </el-form-item>
@@ -51,13 +49,16 @@
           label-width="100px"
         >
           <el-form-item required label="Phone">
-            <el-input v-model="companyInfo.phone" style="width:500px" />
+            <el-input v-model="companyInfo.phone" style="width:700px" />
           </el-form-item>
           <el-form-item required label="Email" prop="email">
-            <el-input v-model="companyInfo.email" style="width:500px"/>
+            <el-input v-model="companyInfo.email" style="width:700px"/>
           </el-form-item>
           <el-form-item required label="Address">
-            <el-input v-model="companyInfo.address" style="width:800px"/>
+            <el-input v-model="companyInfo.address" style="width:700px"/>
+          </el-form-item>
+          <el-form-item required label="公司名称">
+            <el-input v-model="companyInfo.copyright" style="width:700px" />
           </el-form-item>
         </el-form>
         <div class="btnAdd">
@@ -108,6 +109,7 @@ export default {
       activeName: "公司简介",
       companyInfo: {
         type: 0,
+        copyright: '',
         name: "", //公司名字
         introduction: "", //简介
         introductionImg: "", //简介图
@@ -123,20 +125,17 @@ export default {
           toolbar: [
             ["bold", "italic", "underline", "strike"], //加粗，斜体，下划线，删除线
             ["blockquote", "code-block"], //引用，代码块
-
             [{ header: 1 }, { header: 2 }], // 标题，键值对的形式；1、2表示字体大小
             [{ list: "ordered" }, { list: "bullet" }], //列表
             [{ script: "sub" }, { script: "super" }], // 上下标
             [{ indent: "-1" }, { indent: "+1" }], // 缩进
             [{ direction: "rtl" }], // 文本方向
-
             [{ size: ["small", false, "large", "huge"] }], // 字体大小
             [{ header: [1, 2, 3, 4, 5, 6, false] }], //几级标题
-
             [{ color: [] }, { background: [] }], // 字体颜色，字体背景颜色
-            // [{ 'font': [] }],     //字体
-            [{ align: [] }] //对齐方式
-            // ['clean'],    //清除字体样式
+             [{ 'font': [] }],     //字体
+            [{ align: [] }], //对齐方式
+             ['clean'],    //清除字体样式
             // ['image','video']    //上传图片、上传视频
           ]
         },
@@ -180,9 +179,7 @@ export default {
       if (!this.companyInfo.introductionImg) {
         return this.$message({ message: "请上传图片", type: "error" });
       }
-      if (!this.companyInfo.name) {
-        return this.$message({ message: "请填写公司全称", type: "error" });
-      }
+      
       if (!this.companyInfo.introduction) {
         return this.$message({ message: "请填写公司介绍", type: "error" });
       }
@@ -252,6 +249,9 @@ export default {
       }
       if (!this.companyInfo.address) {
         return this.$message({ message: "请填写地址信息", type: "error" });
+      }
+      if (!this.companyInfo.copyright) {
+        return this.$message({ message: "请填写公司名字", type: "error" });
       }
       const { data: res } = await this.$http.post(
         "/api/usr/cor/edit",
@@ -341,8 +341,8 @@ export default {
   color: #444;
 }
 .btnAdd {
-  margin: 30px auto;
-  text-align: center;
+  margin: 50px 100px;
+  // text-align: center;
 }
 .btnAdd .saveBtn {
   width: 150px;

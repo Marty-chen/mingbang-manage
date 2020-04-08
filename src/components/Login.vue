@@ -53,7 +53,13 @@ export default {
               account: this.loginForm.account,
               password: aes.en(this.loginForm.password)
             }
-            const {data:res} = await this.$http.post('/api/login.pub',parme)
+            // const {data:res} = await this.$http.post('/api/login.pub',parme)
+						const {data:res} = await this.$http({
+							method: 'POST',
+							url: '/api/login.pub',
+							data: parme
+            })
+            console.log(res)
             if (res.code=="0000"){
               this.$message({
                 message:'登录成功',

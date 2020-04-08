@@ -52,7 +52,7 @@
         </el-form-item>
 
         <el-form-item>
-          <div class="worlds">只支持JPG,JPEG,PNG格式;图片不大于5MB;尺寸1920*820。</div>
+          <div class="worlds">只支持JPG,JPEG,PNG格式;图片不大于5MB;尺寸1900*800。</div>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -178,7 +178,6 @@ export default {
     },
     //编辑
     showSetRightDialog(row) {
-      console.log(row);
       this.handleType = 1;
       this.setRightDialogVisible = true;
       this.bannerInitType.fileList = [{ url: this.ossUrl + row.img }];

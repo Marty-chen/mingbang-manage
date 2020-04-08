@@ -18,6 +18,7 @@
         <div class="title">产品基本信息:</div>
         <el-form-item required label="产品类别" prop="cateId">
           <el-cascader
+            class="cascader"
             clearable
             v-model="cascaderId"
             :options="catelist"
@@ -27,8 +28,8 @@
         </el-form-item>
 
         <el-form-item required label="产品属性" prop="type">
-          <el-select :disabled="false" v-model="addForm.type" clearable placeholder="请选择">
-            <el-option v-for="item in typeList" :key="item.val" :label="item.lab" :value="item.val"></el-option>
+          <el-select class="cascader" v-model="addForm.type" clearable placeholder="请选择">
+            <el-option  v-for="item in typeList" :key="item.val" :label="item.lab" :value="item.val"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item required label="产品标题" prop="name">
@@ -76,7 +77,7 @@
         <el-form-item label="第五张：">
           <upload :initType="detailInitType5" @sendImgUrl="getDetailImg5" @delImg="delDetailImg5" />
         </el-form-item>
-        <div class="comWordls">上传至少一张产品详情图片。按顺序上传,否则在主页上排列显示会不正常。尺寸：1248*800。</div>
+        <div class="comWordls">上传至少一张产品详情图片。按顺序上传,否则在官网页面上排列显示会不正常。尺寸：1248*800。</div>
 
         <div class="title">产品基本参数:</div>
         <div>
@@ -180,7 +181,7 @@ export default {
       },
       cascaderId: "",
       cascaderProp: {
-        checkStrictly: true,
+        // checkStrictly: true,
         expandTrigger: "hover",
         value: "cateId",
         label: "name",
@@ -218,15 +219,10 @@ export default {
     delProductImg() {
       this.addForm.img = "";
     },
-    //限制选择2级分类
+    //得到2级分类ID
     handleCateChange(e) {
-      console.log(e);
-      console.log(this.cascaderId);
       this.addForm.cateId = e[1];
-      if (this.cascaderId.length !== 2) {
-        this.cascaderId = [];
-        this.$message.error("请选择二级分类");
-      }
+     
     },
     //是否推荐到首页
     getPutaway(e) {
@@ -299,6 +295,11 @@ export default {
       const { data } = await this.$http.post("/api/gds/category/list");
       if (data.code !== "0000") return this.$message.error(data.msg);
       this.catelist = data.data;
+      this.catelist.forEach(item => {
+        item.children.forEach(i => {
+          delete i.children;
+        });
+      });
       if (!gdsId) return;
       //如果是编辑状态获取产品详情
       const { data: res } = await this.$http.post("/api/gds/detail", gdsId);
@@ -362,7 +363,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .title {
   font-size: 20px;
   font-weight: bold;
@@ -376,7 +377,7 @@ export default {
   display: inline-block;
 }
 .btnAdd {
-  margin: 30px auto;
+  margin: 100px 0;
   text-align: center;
 }
 .btnAdd .saveBtn {
@@ -385,6 +386,9 @@ export default {
 .comWordls {
   font-size: 12px;
   color: #999;
-  margin: 50px 100px;
+  margin: 0px 0 50px 100px;
+}
+.cascader {
+  width: 300px;
 }
 </style>

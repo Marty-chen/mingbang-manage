@@ -1,7 +1,9 @@
+
 <template>
   <div class="wraper">
     
     <el-upload
+      
       action
       ref="uploadNow"
       :auto-upload="true"
@@ -18,6 +20,7 @@
       :multiple="initType.multiple"
       :file-list="initType.fileList"
       class="upload"
+      
     >
       <div class="uploaad-icon">
         <div class="upload-icon-img">
@@ -34,6 +37,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { client, getFileNameUUID } from "../../util/oss"; //前面的ali-js文件内的两个封装函数
 
 export default {
@@ -53,9 +57,12 @@ export default {
       dialogVisible: false,
       dialogImageUrl: "",
       imgList: [],
-      loading: false
+      loading: false,
+      ModleLoading:'',
+      
     };
   },
+ 
   methods: {
     //手动点击上传
     submitUpload() {
@@ -68,7 +75,7 @@ export default {
     },
     // 文件超出个数限制时的钩子
     handleExceed() {
-      this.$message.warning(`最多只能上传 ${this.initType.limit} 个文件`);
+      this.$message.warning(`此处最多只能上传 ${this.initType.limit} 个图片`);
     },
     // 点击文件列表中已上传的文件时的钩子
     handlePreview() {},
@@ -88,7 +95,7 @@ export default {
     // 文件变化时的钩子
     handleChange(file, fileList) {
       this.fileList = fileList;
-      console.log(fileList)
+      // console.log(fileList)
       
     },
     //文件上传前的校验
@@ -108,6 +115,13 @@ export default {
       //   this.$message.error("上传视频文件名称长度必须要小于30个文字哦!");
       //   return false;
       // }
+       this.ModleLoading = this.$Loading.service({
+        	lock: true,
+        	text: '图片上传中',
+        	spinner: 'el-icon-loading',
+        	background: 'rgba(0, 0, 0, 0.7)'
+        });
+        
       // 请求后台接口拿配置参数
       return new Promise((resolve, reject) => {
         this.$http.get('/api/oss/ossUploadBatch?type='+this.initType.type).then(response => {
@@ -118,12 +132,14 @@ export default {
         .catch(err => {
             console.log(err);
             reject(false);
+            
           });
       });
     },
     // http-request属性来覆盖默认的上传行为（即action="url"），自定义上传的实现
     Upload(file) {
       const that = this;
+      
       async function multipartUpload() {
         let temporary = file.file.name.lastIndexOf(".");
         let fileNameLength = file.file.name.length;
@@ -132,11 +148,14 @@ export default {
           fileNameLength
         );
         let fileName = getFileNameUUID() + "." + fileFormat;
+        //显示Loding 蒙层
+        
         client(that.dataObj)
           .multipartUpload(`${that.dataObj.url}${fileName}`, file.file, {})
           .then(result => {
             //上传成功返回值，可针对项目需求写其他逻辑
-            
+            //关闭蒙层
+           that.ModleLoading.close()
             //  that.imgList.push(result.name);
             // console.log(that.imgList)
             // if (that.fileList.length == that.imgList.length) {
@@ -147,10 +166,13 @@ export default {
           })
           .catch(err => {
             console.log("err:", err);
+            //关闭蒙层
+            that.ModleLoading.close()
             that.$message({
                 message:"上传图片失败",
                 type:'error'
               })
+
           });
       }
       multipartUpload();

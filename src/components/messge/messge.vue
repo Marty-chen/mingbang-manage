@@ -24,7 +24,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.current"
-        :page-sizes="[5, 15, 20]"
+        :page-sizes="[10, 15, 20]"
         :page-size="queryInfo.size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -65,7 +65,6 @@ export default {
       this.getOrderList();
     },
     delMsg(id) {
-      console.log(id)
       this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",

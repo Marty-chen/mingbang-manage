@@ -14,6 +14,7 @@
       </el-row>
 
       <tree-table
+        
         :data="catelist"
         show-index
         index-text="#"
@@ -23,11 +24,7 @@
         :selection-type="false"
         :expand-type="false"
       >
-        <!-- 是否有效插槽 -->
-        <!-- <template v-slot:isok="scope">
-          <i class="el-icon-success" v-if="!scope.row.cat_deleted" style="color:lightgreen"></i>
-          <i class="el-icon-error" v-else style="color:red"></i>
-        </template>-->
+       
         <!-- 排序插槽 -->
         <template v-slot:level="scope">
           <el-tag size="mini" v-if="scope.row.level === 1">一级</el-tag>
@@ -58,8 +55,8 @@
       width="50%"
     >
       <el-form label-width="100px">
-        <el-form-item label="分类名称：">
-          <el-input v-model="addCateForm.name" @input="changeInput($event)" />
+        <el-form-item required label="分类名称：">
+          <el-input v-model="addCateForm.name" @input="changeInput($event)"  />
         </el-form-item>
         <el-form-item label="父级分类：">
           <el-select :disabled="isEditor" v-model="addCateForm.pid" clearable placeholder="请选择">
@@ -172,7 +169,6 @@ export default {
     },
     //编辑分类 按钮
     handleEdit(row) {
-      console.log(row);
       this.addCateDialogVisible = true;
       this.isEditor = true;
       this.addCateForm.name = row.name;
@@ -211,6 +207,7 @@ export default {
 <style lang="less" scoped>
 .TreeTable {
   margin-top: 15px;
+  text-align: center;
 }
 .explain {
   color: #999;

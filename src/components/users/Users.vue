@@ -129,7 +129,6 @@ export default {
     //请求列表数据
     async getUserList() {
       const { data: res } = await this.$http.post("/api/user/list");
-      console.log(res);
       if (res.code != "0000") {
         return this.$message({
           message: "获取数据失败，请稍后刷新页面",
