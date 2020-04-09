@@ -53,12 +53,8 @@ export default {
               account: this.loginForm.account,
               password: aes.en(this.loginForm.password)
             }
-            // const {data:res} = await this.$http.post('/api/login.pub',parme)
-						const {data:res} = await this.$http({
-							method: 'POST',
-							url: '/api/login.pub',
-							data: parme
-            })
+            const {data:res} = await this.$http.post('/api/login.pub',parme)
+						
             console.log(res)
             if (res.code=="0000"){
               this.$message({
@@ -66,8 +62,6 @@ export default {
                 type:'success'
               })
               window.sessionStorage.setItem('token',res.data.token);
-              // console.log(window.sessionStorage.getItem('token'))
-              // localStorage.setItem("token", res.data.token);
               this.$router.push('/home')
             }else{
               this.$message({

@@ -19,8 +19,7 @@ const routes = [{
         redirect: '/PageSetup',
         component: () =>
             import('../views/Home'),
-        children: [
-            {
+        children: [{
                 path: '/users',
                 component: () =>
                     import('../components/users/Users')
@@ -50,7 +49,7 @@ const routes = [{
                 component: () =>
                     import('../components/goods/Add.vue')
             },
-    
+
             {
                 path: '/reports',
                 component: () =>
@@ -66,7 +65,7 @@ const routes = [{
     {
         path: '/about',
         name: 'About',
-        
+
         component: () =>
             import('../views/About.vue')
     }
@@ -87,6 +86,8 @@ router.beforeEach((to, from, next) => {
         if (!tokenStr) return next('/login')
         next()
     }
-
 })
+router.afterEach(() => {
+    window.scrollTo(0, 0);
+  });
 export default router

@@ -27,7 +27,7 @@
           />
         </el-form-item>
 
-        <el-form-item required label="产品属性" prop="type">
+        <el-form-item label="产品属性" prop="type">
           <el-select class="cascader" v-model="addForm.type" clearable placeholder="请选择">
             <el-option  v-for="item in typeList" :key="item.val" :label="item.lab" :value="item.val"></el-option>
           </el-select>
@@ -47,10 +47,12 @@
         </el-form-item>
         <el-form-item label="推荐到主页">
           <el-switch
-            v-model="putaway"
+            v-model="addForm.putaway"
             @change="getPutaway"
             active-color="#5fb878"
             inactive-color="#999"
+            :active-value="0"
+            :inactive-value="1"
           />
         </el-form-item>
       </el-form>
@@ -177,7 +179,7 @@ export default {
         gdsFeature: "", //特征
         price: "", //价格
         putaway: 1, //是否推荐
-        detailImg: []
+        detailImg: [],
       },
       cascaderId: "",
       cascaderProp: {
@@ -203,7 +205,7 @@ export default {
         cateId: [
           { required: true, message: "请选择产品类别", trigger: "blur" }
         ],
-        type: [{ required: true, message: "请选择产品属性", trigger: "blur" }],
+        // type: [{ required: true, message: "请选择产品属性", trigger: "blur" }],
         detailImg: [
           { required: true, message: "请至少上传一张图片", trigger: "blur" }
         ]
@@ -226,11 +228,14 @@ export default {
     },
     //是否推荐到首页
     getPutaway(e) {
-      if (e) {
-        this.addForm.putaway = 0;
-      } else {
-        this.addForm.putaway = 1;
-      }
+      // if (e) {
+      //   this.addForm.putaway = 0;
+      // } else {
+      //   this.addForm.putaway = 1;
+      // }
+      console.log(this.addForm.putaway)
+      console.log(e)
+
     },
     //保存按钮
     saveInfo() {
@@ -300,8 +305,9 @@ export default {
           delete i.children;
         });
       });
-      if (!gdsId) return;
+      
       //如果是编辑状态获取产品详情
+      if (!gdsId) return;
       const { data: res } = await this.$http.post("/api/gds/detail", gdsId);
       if (data.code !== "0000") return this.$message.error(res.msg);
       this.addForm = res.data;
@@ -351,9 +357,9 @@ export default {
   },
   created() {
     this.getTypeList();
-    let gdsId = this.$route.query.gdsId || "";
+    let gdsId = this.$route.query.gdsId;
     if (gdsId) {
-      console.log("接收过来的值为：" + gdsId);
+      
       this.addForm.gdsId = gdsId;
       this.getCateList(gdsId);
     } else {

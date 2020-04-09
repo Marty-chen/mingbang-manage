@@ -66,7 +66,6 @@ export default {
           path: "goods",
           children: [
             { id: 104, authName: "商品列表", path: "goods" },
-            // {id: 115,authName: '分类参数',path: 'params'},
             { id: 121, authName: "商品分类", path: "categories" }
           ]
         },
@@ -102,17 +101,15 @@ export default {
   methods: {
     async logout() {
       await this.$http.post("/api/logout");
-
-      // localStorage.removeItem("token");
       window.sessionStorage.clear();
+      this.$message.success("退出登陆成功~!")
       this.$router.push("/login");
     },
 
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
     }
-  },
-  created() {}
+  }
 };
 </script>
 

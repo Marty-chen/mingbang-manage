@@ -34,7 +34,7 @@
         class="demo-ruleForm"
       >
         <el-form-item required label="帐号" prop="account">
-          <el-input v-model="newUserInfo.account"></el-input>
+          <el-input v-model="newUserInfo.account" @input="handleChange($event)"></el-input>
         </el-form-item>
         <el-form-item required label="密码" prop="pwd">
           <el-input v-model="newUserInfo.pwd"  type="password"></el-input>
@@ -88,6 +88,10 @@ export default {
     };
   },
   methods: {
+    //解决Input  无法输入
+    handleChange(){
+      this.$forceUpdate()
+    },
     //点击修改按钮
     showEditDialog() {
       this.editDialogVisible = true;

@@ -176,6 +176,7 @@ export default {
      */
     //保存公司信息
     async saveCompanyInfo() {
+       this.companyInfo.type = 0;
       if (!this.companyInfo.introductionImg) {
         return this.$message({ message: "请上传图片", type: "error" });
       }
@@ -214,12 +215,15 @@ export default {
      */
     //点击保存 Logo
     async saveLogoInfo() {
+      this.companyInfo.type = 1;
+      
       if (!this.companyInfo.logo) {
         return this.$message({ message: "请上传图片", type: "error" });
       }
       if (!this.companyInfo.abbreviation) {
         return this.$message({ message: "请填写公司简称", type: "error" });
       }
+      console.log(this.companyInfo)
       const { data: res } = await this.$http.post(
         "/api/usr/cor/edit",
         this.companyInfo
@@ -234,13 +238,16 @@ export default {
     //上传接收LOGO 图片地址
     getLogoImg(img) {
       this.companyInfo.logo = img;
+       console.log(this.companyInfo.logo)
     },
     //删除Logo 图片
     delLogoImg() {
       this.companyInfo.logo = "";
+      console.log(this.companyInfo.logo)
     },
     /*****************底部保存***************** */
     async saveBottomInfo() {
+       this.companyInfo.type = 2;
       if (!this.companyInfo.phone) {
         return this.$message({ message: "请填写手机号码", type: "error" });
       }
@@ -275,6 +282,7 @@ export default {
       this.companyInfo.addressImg = "";
     },
     async saveContactInfo() {
+       this.companyInfo.type = 3;
       if (!this.companyInfo.addressImg) {
         return this.$message({ message: "请上传地图图片", type: "error" });
       }

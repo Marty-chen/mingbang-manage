@@ -50,7 +50,7 @@ export default {
      this.imgs.splice(index,1)
    },
    async saveInfo() {
-     if(!this.imgs[0]) return this.$message.error("请上传图片，或者等待图片上传完成")
+     if(!this.imgs[0]) return this.$message.error("请上传至少一张图片")
      const {data} = await this.$http.post("/api/usr/env/save",this.imgs)
      if(data.code !== '0000') return this.$message.error(data.msg)
      this.getImgList()
