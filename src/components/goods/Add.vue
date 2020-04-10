@@ -397,4 +397,5 @@ export default {
 .cascader {
   width: 300px;
 }
+
 </style>

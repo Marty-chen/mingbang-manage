@@ -17,7 +17,7 @@ import {
 } from "element-ui";
 
 let http = axios.create({
-    baseURL: 'http://192.168.101.233:11000',
+    baseURL: 'https://www.hgc-china.com',
     timeout: 5000,
     headers: {
         platform: "PC",
@@ -26,14 +26,7 @@ let http = axios.create({
     }
 })
 
-// axios.defaults.baseURL = 'http://192.168.101.233:11000';
-// axios.defaults.timeout = 10000;
 
-// let headers = {
-//     platform: "PC",
-//     version: "1.0.0",
-//     timestamp: Date.parse(new Date())
-// }
 
 // 请求头拦截
 http.interceptors.request.use(config => {

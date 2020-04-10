@@ -43,3 +43,6 @@ body,
 .el-cascader-menu .el-scrollbar__wrap {
     overflow: auto;
 }
+.el-cascader-node__postfix {
+    right: 25px;
+  }
