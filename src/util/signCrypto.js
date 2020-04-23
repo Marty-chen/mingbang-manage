@@ -5,8 +5,8 @@
  */
 import CryptoJS from 'crypto-js';
 const KP = {
-  key: 'smkUdoLEdSsldaAa', // 秘钥 16*n:
-  iv: 'vx9sNtLGhR5McqUC' // 偏移量
+  key: '', // 秘钥 16*n:
+  iv: '' // 偏移量
 };
 
 function getAesString(data, key, iv) { // 加密
